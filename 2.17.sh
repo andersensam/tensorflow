@@ -1,9 +1,10 @@
 build --action_env PYTHON_BIN_PATH="/opt/python3.12/bin/python3.12"
 build --action_env PYTHON_LIB_PATH="/opt/venv/lib/python3.12/site-packages"
 build --python_path="/opt/python3.12/bin/python3.12"
-build:cuda --repo_env TF_CUDA_VERSION="12.8.1"
-build:cuda --repo_env TF_CUDNN_VERSION="9.8.0"
+build --action_env TF_PYTHON_VERSION="3.12"
 build:cuda --repo_env TF_CUDA_COMPUTE_CAPABILITIES="compute_89,compute_90,compute_100,compute_120"
+build:cuda --repo_env TF_CUDA_PATHS="/usr/local/cuda-12.8"
+build:cuda --repo_env CUDNN_INSTALL_PATH="/usr/include/x86_64-linux-gnu,/usr/lib/x86_64-linux-gnu"
 build --action_env LD_LIBRARY_PATH="/usr/local/cuda/lib64"
 build --config=cuda_clang
 build --action_env CLANG_CUDA_COMPILER_PATH="/tmp/staging/LLVM-20.1.7-Linux-X64/bin/clang"
