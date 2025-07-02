@@ -174,12 +174,12 @@ class AsyncValueRef {
 
   template <typename F>
   auto Map(F&& f) {
-    return AsPtr().template Map(std::forward<F>(f));
+    return AsPtr().template Map<>(std::forward<F>(f));
   }
 
   template <typename F>
   auto Map(AsyncValue::Executor& executor, F&& f) {
-    return AsPtr().template Map(executor, std::forward<F>(f));
+    return AsPtr().template Map<>(executor, std::forward<F>(f));
   }
 
   template <typename R, typename F>
@@ -194,22 +194,22 @@ class AsyncValueRef {
 
   template <typename F>
   auto TryMap(F&& f) {
-    return AsPtr().template TryMap(std::forward<F>(f));
+    return AsPtr().template TryMap<>(std::forward<F>(f));
   }
 
   template <typename F>
   auto TryMap(AsyncValue::Executor& executor, F&& f) {
-    return AsPtr().template TryMap(executor, std::forward<F>(f));
+    return AsPtr().template TryMap<>(executor, std::forward<F>(f));
   }
 
   template <typename F>
   auto FlatMap(F&& f) {
-    return AsPtr().template FlatMap(std::forward<F>(f));
+    return AsPtr().template FlatMap<>(std::forward<F>(f));
   }
 
   template <typename F>
   auto FlatMap(AsyncValue::Executor& executor, F&& f) {
-    return AsPtr().template FlatMap(executor, std::forward<F>(f));
+    return AsPtr().template FlatMap<>(executor, std::forward<F>(f));
   }
 
   // Make the AsyncValueRef available.
