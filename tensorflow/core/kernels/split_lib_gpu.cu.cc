@@ -119,11 +119,11 @@ __global__ void split_v_kernel(const T* __restrict__ input_ptr,
   IntType gidx = blockIdx.x * blockDim.x + threadIdx.x;
   int num_outputs = output_ptr_data.size;
 
-  // verbose declaration needed due to template
-  GPU_DYNAMIC_SHARED_MEM_DECL(sizeof(T), unsigned char, smem);
-  IntType* smem_col_scan = reinterpret_cast<IntType*>(smem);
-
   if (useSmem) {
+    // verbose declaration needed due to template
+    GPU_DYNAMIC_SHARED_MEM_DECL(sizeof(T), unsigned char, smem);
+    IntType* smem_col_scan = reinterpret_cast<IntType*>(smem);
+
     IntType lidx = threadIdx.y * blockDim.x + threadIdx.x;
     IntType blockSize = blockDim.x * blockDim.y;
 
