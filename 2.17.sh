@@ -15,6 +15,7 @@ build --action_env GCC_PATH="/tmp/staging/LLVM-20.1.7-Linux-X64/bin/clang"
 build:nvcc_clang --config=cuda
 build --action_env=TF_CUDA_CLANG="1"
 build --action_env=TF_NVCC_CLANG="1"
+build --action_env=TF_NEED_ROCM="0"
 build --@local_config_cuda//:cuda_compiler=nvcc
 build:opt --copt=-Wno-sign-compare
 build:opt --host_copt=-Wno-sign-compare
