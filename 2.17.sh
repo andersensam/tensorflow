@@ -12,11 +12,10 @@ build --config=cuda_clang
 build --action_env CLANG_CUDA_COMPILER_PATH="/tmp/staging/LLVM-20.1.7-Linux-X64/bin/clang"
 build --action_env CPP_PATH="/tmp/staging/LLVM-20.1.7-Linux-X64/bin/clang++"
 build --action_env GCC_PATH="/tmp/staging/LLVM-20.1.7-Linux-X64/bin/clang"
-build --action_env CLANG_CUDA_COMPILER_PATH="/tmp/staging/LLVM-20.1.7-Linux-X64/bin/clang"
 build:nvcc_clang --config=cuda
-build:nvcc_clang --action_env=TF_CUDA_CLANG="0"
-build:nvcc_clang --action_env=TF_NVCC_CLANG="1"
-build:nvcc_clang --@local_config_cuda//:cuda_compiler=nvcc
+build --action_env=TF_CUDA_CLANG="1"
+build --action_env=TF_NVCC_CLANG="1"
+build --@local_config_cuda//:cuda_compiler=nvcc
 build:opt --copt=-Wno-sign-compare
 build:opt --host_copt=-Wno-sign-compare
 test --test_size_filters=small,medium
