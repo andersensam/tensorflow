@@ -16,6 +16,7 @@ build:nvcc_clang --config=cuda
 build --action_env=TF_CUDA_CLANG="1"
 build --action_env=TF_NVCC_CLANG="0"
 build --action_env=TF_NEED_ROCM="0"
+builld --copt=-DCUTLASS_SM90_COLLECTIVE_BUILDER_SUPPORTED
 #build --@local_config_cuda//:cuda_compiler=nvcc
 build:opt --copt=-Wno-sign-compare
 build:opt --host_copt=-Wno-sign-compare
