@@ -33,6 +33,28 @@ namespace {
 // https://forums.developer.nvidia.com/t/how-to-calculate-the-tensor-core-fp16-performance-of-h100/244727
 // Below data are calculated from the various NVidia whitepapers/specs.
 
+// https://resources.nvidia.com/en-us-blackwell-architecture?ncid=pa-srch-goog-585983-Intel-Brand-Broad
+const GpuFlopCapabilities kComputeCap_PerSM_PerCycle_10_0 = {
+    .cuda_core =
+        {
+            .fp64_tflops = 148,
+            .fp32_tflops = 296,
+            .bf16_tflops = 592,
+            .fp16_tflops = 592,
+            .int8_tops = 1184,
+        },
+    .tensor_core =
+        {
+            .fp64_tflops = 148,
+            .fp32_tflops = 8192,
+            .bf16_tflops = 16384,
+            .fp16_tflops = 16384,
+            .fp8_tflops = 32768,
+            .int8_tops = 32768,
+        },
+    .has_tensor_core_sparsity_support = true,
+};
+
 // https://resources.nvidia.com/en-us-tensor-core/gtc22-whitepaper-hopper
 const GpuFlopCapabilities kComputeCap_PerSM_PerCycle_9_0 = {
     .cuda_core =
@@ -216,7 +238,8 @@ GpuFlopCapabilities GetNvidiaFlopCapsPerSMPerCycle(int major_comp_cap,
                                                    int minor_comp_cap) {
   static const auto& kPerSMFlopCapsTable =
       *new absl::btree_map<int, GpuFlopCapabilities const*>{
-          // TODO: Add incoming blackwell, and other old GPUS
+          // TODO: Add newer GPUS when available.
+          {10000, &kComputeCap_PerSM_PerCycle_10_0},
           {9000, &kComputeCap_PerSM_PerCycle_9_0},
           {8090, &kComputeCap_PerSM_PerCycle_8_9},
           {8060, &kComputeCap_PerSM_PerCycle_8_6},
