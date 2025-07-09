@@ -352,7 +352,7 @@ def compute_capabilities(repository_ctx):
     # Validate capabilities.
     for capability in capabilities:
         if not capability.startswith(("compute_", "sm_")):
-            _auto_configure_fail("Invalid compute capability: %s" % capability)
+            auto_configure_fail("Invalid compute capability: %s" % capability)
         for prefix in ["compute_", "sm_"]:
             if not capability.startswith(prefix):
                 continue
@@ -363,7 +363,7 @@ def compute_capabilities(repository_ctx):
                 version = version[:-1]
             if version.isdigit() and len(version) in (2, 3):
                 continue
-            _auto_configure_fail("Invalid compute capability: %s" % capability)
+            auto_configure_fail("Invalid compute capability: %s" % capability)
 
     return capabilities
 
