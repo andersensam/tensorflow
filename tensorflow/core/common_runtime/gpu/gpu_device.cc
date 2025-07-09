@@ -2419,7 +2419,9 @@ Status BaseGPUDeviceFactory::GetValidDeviceIds(
 #if defined(GOOGLE_CUDA) && !defined(PLATFORM_GOOGLE)
     // Compare compute capability of device with list in cuda_config.h and
     // warn about long loading time when we need to JIT kernels from PTX.
-    auto compute_capabilities = {TF_CUDA_COMPUTE_CAPABILITIES};
+    // Update macro in cuda_config.h to not have any entries ending with
+    // a, i.e. sm_90a, sm_100a as this causes compilation failure here
+    auto compute_capabilities = {TF_CUDA_COMPUTE_CAPABILITIES_NUMERIC};
     auto device_capability = desc->cuda_compute_capability();
     if (std::count_if(std::cbegin(compute_capabilities),
                       std::cend(compute_capabilities), [&](int cc) {
