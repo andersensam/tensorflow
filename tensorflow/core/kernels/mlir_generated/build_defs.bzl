@@ -158,7 +158,8 @@ def _gen_kernel_bin_impl(ctx):
         arguments = cmd_args + [
             "--tile_sizes=%s" % ctx.attr.tile_size,
             "--host-triple=%s" % ctx.attr.host_triple,
-            "--arch=%s" % ",".join(ctx.attr.gpu_archs),
+            #"--arch=%s" % ",".join(ctx.attr.gpu_archs),
+            "--arch=compute_90,compute_100,compute_120", # Patch this manually since sm_100a is not supported
             "--input=%s" % ctx.file.mlir_op.path,
             "--output=%s" % gpu_bin.path,
             "--enable_ftz=%s" % (ctx.attr.data_type == "f32"),
