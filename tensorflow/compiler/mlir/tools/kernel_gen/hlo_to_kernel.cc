@@ -40,7 +40,6 @@
 #include "llvm/Support/raw_ostream.h"
 #include "llvm/Target/TargetMachine.h"
 #include "llvm/TargetParser/Host.h"
-#include "llvm/TargetParser/Triple.h"
 #include "mlir/Dialect/MemRef/Transforms/AllocationOpInterfaceImpl.h"  // from @llvm-project
 #include "mlir/ExecutionEngine/OptUtils.h"  // from @llvm-project
 #include "mlir/IR/BuiltinOps.h"  // from @llvm-project
@@ -74,7 +73,7 @@ std::unique_ptr<llvm::TargetMachine> GetTargetMachine(
     } else {
       triple = llvm::Triple(llvm::sys::getDefaultTargetTriple());
     }
-    module->setTargetTriple(llvm::Triple(triple.getTriple()));
+    module->setTargetTriple(triple.getTriple());
   }
 
   std::string error;
