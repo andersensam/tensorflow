@@ -115,7 +115,7 @@ REQUIRED_PACKAGES = [
     'tensorboard ~= 2.19.0',
     'keras >= 3.5.0',
     'numpy >= 1.26.0, < 2.2.0',
-    'h5py >= 3.11.0',
+    'h5py >= 3.14.0',
     'ml_dtypes >= 0.5.1, < 1.0.0',
 ]
 
