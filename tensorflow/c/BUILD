@@ -754,6 +754,21 @@ tf_cuda_library(
     ],
 )
 
+# Add this target to allow building of tensorflow_io_gcs_filesystem
+cc_library(
+    name = "env_hdrs",
+    hdrs = [
+        "env.h"
+    ],
+    copts = tf_copts(),
+    visibility = ["//visibility:public"],
+    deps = [
+        ":c_api_macros",
+        ":tf_file_statistics",
+        ":tf_status",
+    ],
+)
+
 cc_library(
     name = "kernels_hdrs",
     hdrs = [
