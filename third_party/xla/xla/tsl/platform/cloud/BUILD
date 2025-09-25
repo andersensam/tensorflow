@@ -127,6 +127,8 @@ cc_library(
         "@com_google_absl//absl/base:core_headers",
         "@com_google_absl//absl/status",
         "@com_google_absl//absl/strings",
+        "@com_google_absl//absl/synchronization",
+        "@com_google_absl//absl/time",
         "@jsoncpp_git//:jsoncpp",
         "@local_tsl//tsl/platform:mutex",
         "@local_tsl//tsl/platform:numbers",
@@ -390,7 +392,7 @@ tsl_cc_test(
 
 tsl_cc_test(
     name = "gcs_file_system_test",
-    size = "small",
+    size = "medium",
     srcs = ["gcs_file_system_test.cc"],
     deps = [
         ":gcs_file_system",
@@ -401,6 +403,7 @@ tsl_cc_test(
         "//xla/tsl/platform:test",
         "//xla/tsl/profiler/backends/cpu:traceme_recorder_impl",
         "//xla/tsl/profiler/utils:time_utils_impl",
+        "@com_google_absl//absl/status",
         "@com_google_googletest//:gtest_main",
         "@local_tsl//tsl/platform:str_util",
         "@local_tsl//tsl/platform:strcat",
