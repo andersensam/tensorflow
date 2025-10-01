@@ -77,7 +77,7 @@ A properly configured work root looks like:
 ```
 Work root
 |
-|--r2.19.1.1-ubuntu22.04_arm64.Dockerfile
+|-- r2.19.1.1-ubuntu22.04_arm64.Dockerfile
 |-- tf_r2.19.1.1_arm64.brc
 |-- bazel
 |-- LLVM-20.1.7-Linux-ARM64.tar.xz
