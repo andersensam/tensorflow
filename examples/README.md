@@ -12,16 +12,14 @@ Ensure your container runtime of choice is installed and properly configured.
 
 Building the Linux targets requires the following directory structure to be setup:
 
+```
 Work root
 |
-
 |-- Target Dockerfile
-
-|-- Target `.tf_configure.bazelrc`
-
+|-- Target .tf_configure.bazelrc
 |-- `bazel` binary
-
 |-- LLVM distribution
+```
 
 `bazel` can be downloaded using `bazelisk`, [see here](https://github.com/bazelbuild/bazelisk). Download `bazelisk` and rename it to `bazel`, placing it in the work root. I have experienced issues with downloading `bazelisk` inside the container and started sourcing from the work root to prevent download issues later on.
 
@@ -29,16 +27,14 @@ The LLVM version used for building with CUDA 12.8.1 support is LLVM 20.1.7. LLVM
 
 An example, properly configured work root for `linux_x86_64` looks something like:
 
+```
 Work root
 |
-
-|-- `r2.19.1.1-ubuntu22.04.Dockerfile`
-
-|-- `tf_r2.19.1.1.brc`
-
-|-- `bazel`
-
-|-- `LLVM-20.1.7-Linux-X64.tar.xz`
+|-- r2.19.1.1-ubuntu22.04.Dockerfile
+|-- tf_r2.19.1.1.brc
+|-- bazel
+|-- LLVM-20.1.7-Linux-X64.tar.xz
+```
 
 Since my target OS is Ubuntu 22.04 and Python 3.12 is not available by default, I build it first in a separate image and copy its contents to the TensorFlow builder image. Once Python 3.12 is built, it is installed to `/opt/python3.12` and a virtual environment is created in `/opt/venv`. Please modify the Python compilation to account for the number of CPUs on your build machine.
 
@@ -78,16 +74,14 @@ The build process is essentially the same. Minor changes are present in the Dock
 
 A properly configured work root looks like:
 
+```
 Work root
 |
-
-|-- `r2.19.1.1-ubuntu22.04_arm64.Dockerfile`
-
-|-- `tf_r2.19.1.1_arm64.brc`
-
-|-- `bazel`
-
-|-- `LLVM-20.1.7-Linux-ARM64.tar.xz`
+|--r2.19.1.1-ubuntu22.04_arm64.Dockerfile
+|-- tf_r2.19.1.1_arm64.brc
+|-- bazel
+|-- LLVM-20.1.7-Linux-ARM64.tar.xz
+```
 
 With all the files in place, we are ready for compilation. In the work root:
 ```
