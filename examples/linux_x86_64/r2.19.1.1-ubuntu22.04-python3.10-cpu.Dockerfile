@@ -16,20 +16,15 @@ ADD LLVM-20.1.7-Linux-X64.tar.xz /tmp/staging/
 ENV VIRTUAL_ENV=/opt/venv
 RUN python3.10 -m venv ${VIRTUAL_ENV}
 ENV PATH="$VIRTUAL_ENV/bin:/tmp/staging/LLVM-20.1.7-Linux-X64/bin:$PATH"
-ENV LLVM_HOME=/tmp/staging/LLVM-20.1.7-Linux-X64 CUDA_HOME=/usr/local/cuda-12.8
+ENV LLVM_HOME=/tmp/staging/LLVM-20.1.7-Linux-X64
 
-# Enable the CUDA repository and install the required libraries
+# Install the required libraries
 RUN apt-get update && apt-get install -y curl && \
-    curl -o cuda-keyring_1.1-1_all.deb https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.1-1_all.deb && \
-    dpkg -i cuda-keyring_1.1-1_all.deb && \
-    apt-get update && apt-get install -y cuda-libraries-dev-12-8 libcudnn9-dev-cuda-12 libnccl-dev ibverbs-utils \
-         patchelf wget curl llvm build-essential git \ 
-         cuda-nvvm-12-8 cuda-nvml-dev-12-8 cuda-nvrtc-dev-12-8 cuda-nvcc-12-8 libnccl2 \
-         cuda-cupti-12-8 cuda-cupti-dev-12-8 && \
+    apt-get update && apt-get install -y patchelf wget curl llvm build-essential git && \
     apt clean -y
 
 # Prepare to build
-ENV CC_OPT_FLAGS="-Wno-gnu-offsetof-extensions -Wno-error -Wno-c23-extensions -Wno-macro-redefined" CPATH="${CUDA_HOME}/include:/usr/local/cuda-12.8/targets/x86_64-linux/include"
+ENV CC_OPT_FLAGS="-Wno-gnu-offsetof-extensions -Wno-error -Wno-c23-extensions -Wno-macro-redefined"
 
 # Install Bazelisk (Bazel wrapper), using a local bazel file since the download doesn't work half the time
 COPY bazel /usr/local/bin/bazel
@@ -43,13 +38,13 @@ RUN git init /workspace/tensorflow && git config --global --add safe.directory /
     git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin && \
     git checkout r2.19
 
-# Copy the CUDA config into the image, don't use --config=tpu or --config=avx_linux do to issues on Python 3.10
-COPY tf_r2.19.1.1_py3.10.brc .tf_configure.bazelrc
-RUN bazel build //tensorflow/tools/pip_package:wheel --repo_env=WHEEL_NAME=tensorflow --config=cuda --config=cuda_wheel \
+# Copy the config into the image
+COPY tf_r2.19.1.1_py3.10_cpu.brc .tf_configure.bazelrc
+RUN bazel build //tensorflow/tools/pip_package:wheel --repo_env=WHEEL_NAME=tensorflow_cpu --config=tpu --config=avx_linux \
     --copt=-Wno-gnu-offsetof-extensions --copt=-Wno-error --copt=-Wno-c23-extensions --verbose_failures \
     --copt=-Wno-macro-redefined
 
-# Export the CUDA wheels
+# Export the wheel
 RUN cp /workspace/tensorflow/bazel-bin/tensorflow/tools/pip_package/wheel_house/*.whl /workspace && \
     mkdir -p /mnt/export && cp -rf /workspace/*.whl /mnt/export
 
