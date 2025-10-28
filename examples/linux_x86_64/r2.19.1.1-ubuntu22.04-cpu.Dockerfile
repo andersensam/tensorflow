@@ -42,10 +42,7 @@ ENV PATH="$VIRTUAL_ENV/bin:/tmp/staging/LLVM-20.1.7-Linux-X64/bin:$PATH"
 ENV LLVM_HOME=/tmp/staging/LLVM-20.1.7-Linux-X64
 
 # Enable the CUDA repository and install the required libraries for building TensorFlow
-RUN apt-get update && apt-get install -y curl && \
-    curl -o cuda-keyring_1.1-1_all.deb https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.1-1_all.deb && \
-    dpkg -i cuda-keyring_1.1-1_all.deb && \
-    apt-get update && apt-get install -y patchelf wget curl llvm build-essential git && \
+RUN apt-get update && apt-get install -y patchelf wget curl llvm build-essential git && \
     apt clean -y
 
 # Prepare to build and set any environmental flags that bazel might be difficult with

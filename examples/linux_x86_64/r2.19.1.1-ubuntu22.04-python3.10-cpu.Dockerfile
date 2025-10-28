@@ -19,8 +19,7 @@ ENV PATH="$VIRTUAL_ENV/bin:/tmp/staging/LLVM-20.1.7-Linux-X64/bin:$PATH"
 ENV LLVM_HOME=/tmp/staging/LLVM-20.1.7-Linux-X64
 
 # Install the required libraries
-RUN apt-get update && apt-get install -y curl && \
-    apt-get update && apt-get install -y patchelf wget curl llvm build-essential git && \
+RUN apt-get update && apt-get install -y patchelf wget curl llvm build-essential git && \
     apt clean -y
 
 # Prepare to build
