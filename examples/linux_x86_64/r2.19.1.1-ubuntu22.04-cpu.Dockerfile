@@ -60,8 +60,12 @@ RUN git init /workspace/tensorflow && git config --global --add safe.directory /
     git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin && \
     git checkout r2.19
 
-# Copy the CUDA config into the image
-COPY tf_r2.19.1.1.brc .tf_configure.bazelrc
+# Fetch dependencies for the targets
+RUN --mount=type=cache,target=/root/.cache/bazel,id=bazel-cache \
+    bazel fetch //tensorflow/tools/pip_package:wheel --config=tpu --config=avx_linux --config=cuda --config=cuda_wheel
+
+# Copy the config into the image and build using the dependency cache
+COPY tf_r2.19.1.1_cpu.brc .tf_configure.bazelrc
 RUN --mount=type=cache,target=/root/.cache/bazel,id=bazel-cache \
     bazel build //tensorflow/tools/pip_package:wheel --repo_env=WHEEL_NAME=tensorflow_cpu --config=tpu --config=avx_linux \
         --copt=-Wno-gnu-offsetof-extensions --copt=-Wno-error --copt=-Wno-c23-extensions --verbose_failures \
