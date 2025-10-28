@@ -68,9 +68,10 @@ RUN git init /workspace/tensorflow && git config --global --add safe.directory /
 
 # Copy the CUDA config into the image
 COPY tf_r2.19.1.1.brc .tf_configure.bazelrc
-RUN bazel build //tensorflow/tools/pip_package:wheel --repo_env=WHEEL_NAME=tensorflow --config=cuda --config=cuda_wheel \
-    --copt=-Wno-gnu-offsetof-extensions --copt=-Wno-error --copt=-Wno-c23-extensions --verbose_failures \
-    --copt=-Wno-macro-redefined
+RUN --mount=type=cache,target=/root/.cache/bazel,id=bazel-cache \
+    bazel build //tensorflow/tools/pip_package:wheel --repo_env=WHEEL_NAME=tensorflow --config=cuda --config=cuda_wheel \
+        --copt=-Wno-gnu-offsetof-extensions --copt=-Wno-error --copt=-Wno-c23-extensions --verbose_failures \
+        --copt=-Wno-macro-redefined
 
 # Export the wheels
 RUN cp /workspace/tensorflow/bazel-bin/tensorflow/tools/pip_package/wheel_house/*.whl /workspace && \
