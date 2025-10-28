@@ -45,7 +45,7 @@ RUN git init /workspace/tensorflow && git config --global --add safe.directory /
 
 # Copy the CUDA config into the image, don't use --config=tpu or --config=avx_linux do to issues on Python 3.10
 COPY tf_r2.19.1.1_py3.10.brc .tf_configure.bazelrc
-RUN RUN --mount=type=cache,target=/root/.cache/bazel,id=bazel-cache \
+RUN --mount=type=cache,target=/root/.cache/bazel,id=bazel-cache \
     bazel build //tensorflow/tools/pip_package:wheel --repo_env=WHEEL_NAME=tensorflow --config=cuda --config=cuda_wheel \
         --copt=-Wno-gnu-offsetof-extensions --copt=-Wno-error --copt=-Wno-c23-extensions --verbose_failures \
         --copt=-Wno-macro-redefined
