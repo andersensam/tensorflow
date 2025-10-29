@@ -1,6 +1,7 @@
-build --action_env PYTHON_BIN_PATH="/usr/bin/python3.10"
+build --action_env PYTHON_BIN_PATH="/opt/venv/bin/python3.10"
 build --action_env PYTHON_LIB_PATH="/opt/venv/lib/python3.10/site-packages"
-build --python_path="/usr/bin/python3.10"
+build --repo_env HERMETIC_PYTHON_VERSION=3.10
+build --python_path="/opt/venv/bin/python3.10"
 build --action_env CPP_PATH="/tmp/staging/LLVM-20.1.7-Linux-X64/bin/clang++"
 build --action_env GCC_PATH="/tmp/staging/LLVM-20.1.7-Linux-X64/bin/clang"
 build --config=avx_linux
