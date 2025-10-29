@@ -44,8 +44,9 @@ RUN --mount=type=cache,target=/root/.cache/bazel,id=bazel-cache \
         --copt=-Wno-gnu-offsetof-extensions --copt=-Wno-error --copt=-Wno-c23-extensions --verbose_failures \
         --copt=-Wno-macro-redefined
 
-# Export the wheel
-RUN cp /workspace/tensorflow/bazel-bin/tensorflow/tools/pip_package/wheel_house/*.whl /workspace && \
+# Export the wheels
+RUN --mount=type=cache,target=/root/.cache/bazel,id=bazel-cache \
+    cp /workspace/tensorflow/bazel-bin/tensorflow/tools/pip_package/wheel_house/*.whl /workspace && \
     mkdir -p /mnt/export && cp -rf /workspace/*.whl /mnt/export
 
 FROM scratch AS target

@@ -68,7 +68,8 @@ RUN --mount=type=cache,target=/root/.cache/bazel,id=bazel-cache \
         --copt=-Wno-macro-redefined
 
 # Export the wheels
-RUN cp /workspace/tensorflow/bazel-bin/tensorflow/tools/pip_package/wheel_house/*.whl /workspace && \
+RUN --mount=type=cache,target=/root/.cache/bazel,id=bazel-cache \
+    cp /workspace/tensorflow/bazel-bin/tensorflow/tools/pip_package/wheel_house/*.whl /workspace && \
     mkdir -p /mnt/export && cp -rf /workspace/*.whl /mnt/export
 
 FROM scratch AS target
