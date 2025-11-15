@@ -5,7 +5,6 @@ build --python_path="/opt/venv/bin/python3.12"
 build --action_env CPP_PATH="/tmp/staging/LLVM-20.1.7-Linux-X64/bin/clang++"
 build --action_env GCC_PATH="/tmp/staging/LLVM-20.1.7-Linux-X64/bin/clang"
 build --config=avx_linux
-build --config=tpu
 build --repo_env=CC="/tmp/staging/LLVM-20.1.7-Linux-X64/bin/clang"
 build --repo_env=CPP="/tmp/staging/LLVM-20.1.7-Linux-X64/bin/clang++"
 build --repo_env=BAZEL_COMPILER="/tmp/staging/LLVM-20.1.7-Linux-X64/bin/clang"
