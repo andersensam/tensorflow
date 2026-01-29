@@ -48,7 +48,7 @@ from setuptools.dist import Distribution
 # result for pip.
 # Also update tensorflow/tensorflow.bzl and
 # tensorflow/core/public/version.h
-_VERSION = '2.19.1.2'
+_VERSION = '2.19.1.3'
 
 # Update this version when a new libtpu stable version is released.
 LATEST_RELEASE_LIBTPU_VERSION = '0.0.10'
@@ -114,7 +114,7 @@ REQUIRED_PACKAGES = [
     # 'keras >= 2.14.0rc0, < 2.15' on the release branch after the branch cut.
     'tensorboard ~= 2.19.0',
     'keras >= 3.5.0',
-    'numpy >= 1.26.0, < 2.2.0',
+    'numpy >= 1.26.0, < 2.3.0',
     'h5py >= 3.14.0',
     'ml_dtypes >= 0.5.1, < 1.0.0',
 ]
@@ -408,19 +408,18 @@ setup(
     # Add in any packaged data.
     zip_safe=False,
     # Supported Python versions
-    python_requires='>=3.9',
+    python_requires='>=3.10',
     # PyPI package information.
     classifiers=sorted([
         'Development Status :: 5 - Production/Stable',
         # TODO(angerson) Add IFTTT when possible
         'Environment :: GPU :: NVIDIA CUDA :: 12',
-        'Environment :: GPU :: NVIDIA CUDA :: 12 :: 12.2',
+        'Environment :: GPU :: NVIDIA CUDA :: 12 :: 12.8',
         'Intended Audience :: Developers',
         'Intended Audience :: Education',
         'Intended Audience :: Science/Research',
         'License :: OSI Approved :: Apache Software License',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: 3.10',
         'Programming Language :: Python :: 3.11',
         'Programming Language :: Python :: 3.12',
