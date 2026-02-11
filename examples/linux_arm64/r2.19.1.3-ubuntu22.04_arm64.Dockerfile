@@ -16,7 +16,7 @@ RUN apt-get update && \
     apt clean -y && \
     curl -o Python-3.12.12.tgz https://www.python.org/ftp/python/3.12.12/Python-3.12.12.tgz && \
     tar -xvf Python-3.12.12.tgz && \
-    ./Python-3.12.11/configure --enable-optimizations --with-ensurepip=install --prefix=/opt/python3.12 && \
+    ./Python-3.12.12/configure --enable-optimizations --with-ensurepip=install --prefix=/opt/python3.12 && \
     make all -j22 && \
     make altinstall -j22 && \
     apt-get remove -y build-essential zlib1g-dev libncurses5-dev libgdbm-dev \
