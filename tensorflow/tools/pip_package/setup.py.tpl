@@ -390,7 +390,7 @@ setup(
     long_description='\n'.join(DOCLINES[2:]),
     long_description_content_type='text/markdown',
     url='https://www.tensorflow.org/',
-    download_url='https://github.com/tensorflow/tensorflow/tags',
+    download_url='https://github.com/andersensam/tensorflow/tags',
     author='Google Inc.',
     author_email='packages@tensorflow.org',
     install_requires=REQUIRED_PACKAGES,
@@ -398,22 +398,19 @@ setup(
     # Add in any packaged data.
     zip_safe=False,
     # Supported Python versions
-    python_requires='>=3.10',
+    python_requires='>=3.12',
     # PyPI package information.
     classifiers=sorted([
         'Development Status :: 5 - Production/Stable',
         # TODO(angerson) Add IFTTT when possible
         'Environment :: GPU :: NVIDIA CUDA :: 12',
-        'Environment :: GPU :: NVIDIA CUDA :: 12 :: 12.2',
+        'Environment :: GPU :: NVIDIA CUDA :: 12 :: 12.8',
         'Intended Audience :: Developers',
         'Intended Audience :: Education',
         'Intended Audience :: Science/Research',
         'License :: OSI Approved :: Apache Software License',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.10',
-        'Programming Language :: Python :: 3.11',
         'Programming Language :: Python :: 3.12',
-        'Programming Language :: Python :: 3.13',
         'Programming Language :: Python :: 3 :: Only',
         'Topic :: Scientific/Engineering',
         'Topic :: Scientific/Engineering :: Mathematics',
