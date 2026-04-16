@@ -19,12 +19,13 @@ tf_http_archive(
 #
 # A hermetic build system is designed to produce completely reproducible builds for C++.
 # Details: https://github.com/google-ml-infra/rules_ml_toolchain
+# Use fork to capture changes needed for CUDA compute abilities
 tf_http_archive(
     name = "rules_ml_toolchain",
-    sha256 = "54c1a357f71f611efdb4891ebd4bcbe4aeb6dfa7e473f14fd7ecad5062096616",
-    strip_prefix = "rules_ml_toolchain-d8cb9c2c168cd64000eaa6eda0781a9615a26ffe",
+    sha256 = "e437448557fb0528a9a3b3dc9399465426eeaaae7101360983d6c1a56b7846ea",
+    strip_prefix = "rules_ml_toolchain-5859ea7c33f8c608e4d231e1f49417262867320a",
     urls = tf_mirror_urls(
-        "https://github.com/google-ml-infra/rules_ml_toolchain/archive/d8cb9c2c168cd64000eaa6eda0781a9615a26ffe.tar.gz",
+        "https://github.com/andersensam/rules_ml_toolchain/archive/5859ea7c33f8c608e4d231e1f49417262867320a.tar.gz",
     ),
 )
 
