@@ -48,7 +48,7 @@ RUN apt-get update && apt-get install -y curl && \
     apt-get update && apt-get install -y cuda-libraries-dev-12-8 libcudnn9-dev-cuda-12 libnccl-dev ibverbs-utils \
          patchelf wget curl llvm build-essential git \ 
          cuda-nvvm-12-8 cuda-nvml-dev-12-8 cuda-nvrtc-dev-12-8 cuda-nvcc-12-8 libnccl2 \
-         cuda-cupti-12-8 cuda-cupti-dev-12-8 && \
+         cuda-cupti-12-8 cuda-cupti-dev-12-8 xxd nano && \
     apt clean -y
 
 # Prepare to build and set any environmental flags that bazel might be difficult with

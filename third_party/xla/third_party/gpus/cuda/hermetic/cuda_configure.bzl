@@ -574,6 +574,7 @@ def _create_dummy_cuda_repository(repository_ctx):
                 "%{cudnn_version}": cuda_config.cudnn_version,
                 "%{cuda_toolkit_path}": "",
                 "%{cuda_compute_capabilities}": "",
+                "%{cuda_compute_capabilities_numeric}": "90, 100, 101, 120",
             },
         )
     else:
@@ -592,6 +593,7 @@ def _create_dummy_cuda_repository(repository_ctx):
                 "%{cudnn_version}": "",
                 "%{cuda_toolkit_path}": "",
                 "%{cuda_compute_capabilities}": "",
+                "%{cuda_compute_capabilities_numeric}": "90, 100, 101, 120",
             },
         )
 
@@ -654,6 +656,7 @@ def _create_local_cuda_repository(repository_ctx):
                 cc.split("_")[1]
                 for cc in cuda_config.compute_capabilities
             ]),
+            "%{cuda_compute_capabilities_numeric}": "90, 100, 101, 120",
         },
     )
 
