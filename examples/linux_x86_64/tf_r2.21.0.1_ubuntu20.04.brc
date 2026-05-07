@@ -8,10 +8,15 @@ build:cuda --repo_env HERMETIC_CUDA_COMPUTE_CAPABILITIES="compute_90,compute_100
 build --action_env LD_LIBRARY_PATH="/usr/local/cuda/lib64"
 build --config=cuda_clang
 build --config=avx_linux
+build --config=clang_local
 build --action_env CLANG_CUDA_COMPILER_PATH="/opt/llvm/bin/clang"
 build --action_env CPP_PATH="/opt/llvm/bin/clang++"
+build --action_env CXX="/opt/llvm/bin/clang++"
 build --action_env GCC_PATH="/opt/llvm/bin/clang"
-build --action_env CLANG_CUDA_COMPILER_PATH="/opt/llvm/bin/clang"
+build --action_env CC="/opt/llvm/bin/clang"
+build --action_env CLANG_COMPILER_PATH="/opt/llvm/bin/clang"
+build:linux --repo_env=LLVM_VERSION=20
+build:linux --repo_env=SYSROOT_DIST=linux_glibc_2_31
 build:opt --copt=-Wno-sign-compare
 build:opt --host_copt=-Wno-sign-compare
 test --test_size_filters=small,medium
