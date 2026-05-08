@@ -199,7 +199,15 @@ cc_library(
         ":platform",
         ":tstring",
         "@xla//xla/tsl/platform:types",
-    ] + tsl_protobuf_deps(),
+    ] + select({
+        "@bazel_tools//src/conditions:darwin": [
+            "@com_google_absl//absl/log:absl_check",
+            "@com_google_absl//absl/container:flat_hash_map",
+            "@com_google_absl//absl/algorithm:container",
+            "@com_google_absl//absl/container:btree",
+        ],
+        "//conditions:default": [],
+    }) + tsl_protobuf_deps(),
 )
 
 cc_library(

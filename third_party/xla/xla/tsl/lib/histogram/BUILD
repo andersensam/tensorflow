@@ -26,7 +26,15 @@ cc_library(
         "//xla/tsl/protobuf:histogram_proto_cc",
         "@com_google_absl//absl/synchronization",
         "@tsl//tsl/platform:thread_annotations",
-    ],
+    ] + select({
+        "@bazel_tools//src/conditions:darwin": [
+            "@com_google_absl//absl/log:absl_check",
+            "@com_google_absl//absl/container:flat_hash_map",
+            "@com_google_absl//absl/algorithm:container",
+            "@com_google_absl//absl/container:btree",
+        ],
+        "//conditions:default": [],
+    }),
     alwayslink = True,
 )
 

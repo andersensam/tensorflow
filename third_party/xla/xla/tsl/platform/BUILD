@@ -446,7 +446,15 @@ cc_library(
         "@com_google_absl//absl/strings",
         "@com_google_absl//absl/strings:cord",
         "@tsl//tsl/platform:strcat",
-    ],
+    ] + select({
+        "@bazel_tools//src/conditions:darwin": [
+            "@com_google_absl//absl/log:absl_check",
+            "@com_google_absl//absl/container:flat_hash_map",
+            "@com_google_absl//absl/algorithm:container",
+            "@com_google_absl//absl/container:btree",
+        ],
+        "//conditions:default": [],
+    }),
 )
 
 tsl_cc_test(
