@@ -513,7 +513,12 @@ def _tf_repositories():
         strip_prefix = "boringssl-c00d7ca810e93780bd0c8ee4eea28f4f2ea4bcdc",
         system_build_file = "//third_party/systemlibs:boringssl.BUILD",
         urls = tf_mirror_urls("https://github.com/google/boringssl/archive/c00d7ca810e93780bd0c8ee4eea28f4f2ea4bcdc.tar.gz"),
-        build_file = "//third_party:boringssl.BUILD",
+        build_file = "@//third_party:boringssl.BUILD",
+        link_files = {
+            "//third_party:boringssl_prefix_symbols.h": "src/include/boringssl_prefix_symbols.h",
+            "//third_party:boringssl_prefix_symbols_asm.h": "src/include/boringssl_prefix_symbols_asm.h",
+            "//third_party:boringssl_prefix_symbols_nasm.inc": "src/include/boringssl_prefix_symbols_nasm.inc",
+        },
     )
 
     # Note: if you update this, you have to update libpng too. See cl/437813808

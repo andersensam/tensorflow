@@ -1,1 +1,7 @@
 licenses(["notice"])  # Apache 2.0
+
+exports_files([
+    "boringssl_prefix_symbols.h",
+    "boringssl_prefix_symbols_asm.h",
+    "boringssl_prefix_symbols_nasm.inc",
+])

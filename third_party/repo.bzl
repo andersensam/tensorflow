@@ -82,6 +82,12 @@ def _tf_http_archive_impl(ctx):
                 if patch_file:
                     ctx.patch(patch_file, strip = 1)
 
+        patch_cmds = ctx.attr.patch_cmds
+        for cmd in patch_cmds:
+            res = ctx.execute(["sh", "-c", cmd])
+            if res.return_code != 0:
+                fail("Failed to execute patch_cmd: %s" % res.stderr)
+
     for dst, src in link_dict.items():
         ctx.delete(dst)
         ctx.symlink(src, dst)
@@ -94,6 +100,7 @@ _tf_http_archive = repository_rule(
         "strip_prefix": attr.string(),
         "type": attr.string(),
         "patch_file": attr.string_list(),
+        "patch_cmds": attr.string_list(),
         "build_file": attr.string(),
         "system_build_file": attr.string(),
         "link_files": attr.string_dict(),
