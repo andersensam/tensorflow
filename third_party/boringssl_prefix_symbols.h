@@ -3923,3 +3923,7 @@
 #define x509v3_conf_name_matches BORINGSSL_ADD_PREFIX(BORINGSSL_PREFIX, x509v3_conf_name_matches)
 #define x509v3_hex_to_bytes BORINGSSL_ADD_PREFIX(BORINGSSL_PREFIX, x509v3_hex_to_bytes)
 #define x509v3_looks_like_dns_name BORINGSSL_ADD_PREFIX(BORINGSSL_PREFIX, x509v3_looks_like_dns_name)
+#define gcm_init_v8 BORINGSSL_ADD_PREFIX(BORINGSSL_PREFIX, gcm_init_v8)
+#define gcm_ghash_v8 BORINGSSL_ADD_PREFIX(BORINGSSL_PREFIX, gcm_ghash_v8)
+#define gcm_gmult_v8 BORINGSSL_ADD_PREFIX(BORINGSSL_PREFIX, gcm_gmult_v8)
+
