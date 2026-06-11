@@ -29,6 +29,7 @@ limitations under the license, the license you must see.
 #include "cub/device/device_select.cuh"
 #include "cub/iterator/counting_input_iterator.cuh"
 #include "cub/iterator/transform_input_iterator.cuh"
+#include "cub/iterator/constant_input_iterator.cuh"
 #include "cub/thread/thread_operators.cuh"
 #include "cub/warp/warp_reduce.cuh"
 #include "third_party/gpus/cuda/include/cusparse.h"
@@ -37,6 +38,33 @@ namespace gpuprim = ::cub;
 
 // Required for sorting Eigen::half and bfloat16.
 namespace cub {
+#if CUB_VERSION >= 200700
+template <>
+__device__ __forceinline__ void ThreadStoreVolatilePtr<Eigen::half>(
+    Eigen::half *ptr, Eigen::half val, ::cuda::std::true_type /*is_primitive*/) {
+  *reinterpret_cast<volatile uint16_t *>(ptr) =
+      Eigen::numext::bit_cast<uint16_t>(val);
+}
+
+__device__ __forceinline__ Eigen::half ThreadLoadVolatilePointer(
+    const Eigen::half *ptr, ::cuda::std::true_type /*is_primitive*/) {
+  uint16_t result = *reinterpret_cast<volatile const uint16_t *>(ptr);
+  return Eigen::numext::bit_cast<Eigen::half>(result);
+}
+
+template <>
+__device__ __forceinline__ void ThreadStoreVolatilePtr<tsl::bfloat16>(
+    tsl::bfloat16 *ptr, tsl::bfloat16 val, ::cuda::std::true_type /*is_primitive*/) {
+  *reinterpret_cast<volatile uint16_t *>(ptr) =
+      Eigen::numext::bit_cast<uint16_t>(val);
+}
+
+__device__ __forceinline__ tsl::bfloat16 ThreadLoadVolatilePointer(
+    tsl::bfloat16 *ptr, ::cuda::std::true_type /*is_primitive*/) {
+  uint16_t result = *reinterpret_cast<volatile uint16_t *>(ptr);
+  return Eigen::numext::bit_cast<tsl::bfloat16>(result);
+}
+#else
 template <>
 __device__ __forceinline__ void ThreadStoreVolatilePtr<Eigen::half>(
     Eigen::half *ptr, Eigen::half val, Int2Type<true> /*is_primitive*/) {
@@ -62,6 +90,7 @@ __device__ __forceinline__ tsl::bfloat16 ThreadLoadVolatilePointer(
   uint16_t result = *reinterpret_cast<volatile uint16_t *>(ptr);
   return Eigen::numext::bit_cast<tsl::bfloat16>(result);
 }
+#endif
 
 template <>
 struct NumericTraits<Eigen::half>

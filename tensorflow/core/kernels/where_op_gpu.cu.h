@@ -219,23 +219,101 @@ class WhereOutputIterator {
       iterator_category;  ///< The iterator category
 #endif  // THRUST_VERSION
 
-  WhereOutputIterator(int64* ptr, const Eigen::DenseIndex max_row)
+  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE WhereOutputIterator(int64* ptr, const Eigen::DenseIndex max_row)
       : ptr_(ptr), max_row_(max_row) {}
 
-  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE int64& operator[](int n) const {
+  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE int64& operator[](difference_type n) const {
     // If the selection mechanism finds too many true values (because
     // the input tensor changed between allocation of output and now),
     // we may accidentally try to write past the allowable memory.  If
     // valid is false, then we don't do this.  Instead, we'll read off
     // the number of items found in Flagged()'s d_num_selected_out at
     // the end and confirm that it matches the number of rows of output.
-    const bool valid = FastBoundsCheck(n, max_row_);
+    const bool valid = max_row_ > 0 && FastBoundsCheck(n, max_row_);
     return *(ptr_ + (valid ? (NDIM * n) : 0));
+  }
+
+  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE reference operator*() const {
+    return *ptr_;
+  }
+
+  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE self_type operator+(difference_type n) const {
+    return self_type(ptr_ + NDIM * n, max_row_ - n);
+  }
+
+  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE self_type operator-(difference_type n) const {
+    return self_type(ptr_ - NDIM * n, max_row_ + n);
+  }
+
+  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE self_type& operator+=(difference_type n) {
+    ptr_ += NDIM * n;
+    max_row_ -= n;
+    return *this;
+  }
+
+  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE self_type& operator-=(difference_type n) {
+    ptr_ -= NDIM * n;
+    max_row_ += n;
+    return *this;
+  }
+
+  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE self_type& operator++() {
+    ptr_ += NDIM;
+    max_row_--;
+    return *this;
+  }
+
+  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE self_type operator++(int) {
+    self_type temp = *this;
+    ptr_ += NDIM;
+    max_row_--;
+    return temp;
+  }
+
+  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE self_type& operator--() {
+    ptr_ -= NDIM;
+    max_row_++;
+    return *this;
+  }
+
+  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE self_type operator--(int) {
+    self_type temp = *this;
+    ptr_ -= NDIM;
+    max_row_++;
+    return temp;
+  }
+
+  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE difference_type operator-(const self_type& other) const {
+    return (ptr_ - other.ptr_) / NDIM;
+  }
+
+  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE bool operator==(const self_type& other) const {
+    return ptr_ == other.ptr_;
+  }
+
+  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE bool operator!=(const self_type& other) const {
+    return ptr_ != other.ptr_;
+  }
+
+  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE bool operator<(const self_type& other) const {
+    return ptr_ < other.ptr_;
+  }
+
+  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE bool operator>(const self_type& other) const {
+    return ptr_ > other.ptr_;
+  }
+
+  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE bool operator<=(const self_type& other) const {
+    return ptr_ <= other.ptr_;
+  }
+
+  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE bool operator>=(const self_type& other) const {
+    return ptr_ >= other.ptr_;
   }
 
  private:
   int64* ptr_;
-  const Eigen::DenseIndex max_row_;
+  Eigen::DenseIndex max_row_;
 };
 
 template <typename TIndex, typename T, int NDIM>

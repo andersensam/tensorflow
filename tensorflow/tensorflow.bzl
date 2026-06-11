@@ -95,8 +95,8 @@ def register_extension_info(**kwargs):
 # not contain rc or alpha, only numbers.
 # Also update tensorflow/core/public/version.h
 # and tensorflow/tools/pip_package/setup.py
-WHEEL_VERSION = "2.19.1.3"
-VERSION = "2.19.1.3"
+WHEEL_VERSION = "2.19.1.4"
+VERSION = "2.19.1.4"
 VERSION_MAJOR = VERSION.split(".")[0]
 two_gpu_tags = ["requires-gpu-nvidia:2", "manual", "no_pip"]
 
