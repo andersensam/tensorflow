@@ -875,6 +875,7 @@ def tf_cc_shared_object(
                 clean_dep("//tensorflow:windows"): [],
                 "//conditions:default": [
                     "-Wl,-soname," + soname,
+                    "-Wl,-z,max-page-size=65536",
                 ],
             }),
             testonly = testonly,
@@ -2376,6 +2377,7 @@ def tf_custom_op_library(
         linkopts = linkopts + select({
             "//conditions:default": [
                 "-lm",
+                "-Wl,-z,max-page-size=65536",
             ],
             clean_dep("//tensorflow:windows"): [],
             clean_dep("//tensorflow:macos"): [],
@@ -2515,6 +2517,7 @@ def pywrap_tensorflow_macro_opensource(
         "//conditions:default": [
             "-Wl,--version-script",
             "$(location %s.lds)" % vscriptname,
+            "-Wl,-z,max-page-size=65536",
         ],
     })
     additional_linker_inputs = if_windows([], otherwise = ["%s.lds" % vscriptname])

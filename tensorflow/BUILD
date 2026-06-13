@@ -1196,6 +1196,7 @@ tf_cc_shared_library(
         ],
         "//conditions:default": [
             "-Wl,--version-script,$(location //tensorflow:tf_framework_version_script.lds)",
+            "-Wl,-z,max-page-size=65536",
             # copybara:uncomment_begin(google-only)
             # "-Wl,--undefined-version",
             # copybara:uncomment_end(google-only)
@@ -1293,6 +1294,7 @@ pywrap_aware_tf_cc_shared_object(
         "//conditions:default": [
             "-z defs",
             "-Wl,--version-script,$(location //tensorflow/c:version_script.lds)",
+            "-Wl,-z,max-page-size=65536",
         ],
     }),
     per_os_targets = True,
@@ -1344,6 +1346,7 @@ tf_cc_shared_library(
         "//conditions:default": [
             "-z defs",
             "-Wl,--version-script,$(location //tensorflow:tf_version_script.lds)",
+            "-Wl,-z,max-page-size=65536",
         ],
     }),
     per_os_targets = True,
