@@ -22,10 +22,10 @@ tf_http_archive(
 # Use fork to capture changes needed for CUDA compute abilities
 tf_http_archive(
     name = "rules_ml_toolchain",
-    sha256 = "e437448557fb0528a9a3b3dc9399465426eeaaae7101360983d6c1a56b7846ea",
-    strip_prefix = "rules_ml_toolchain-5859ea7c33f8c608e4d231e1f49417262867320a",
+    sha256 = "8aa99086d39157657819bdfc91a1f68ff82a2379774c17113d7d1420871cd784",
+    strip_prefix = "rules_ml_toolchain-3e9dec4499b39afb83eef392d3a0f028bd988462",
     urls = tf_mirror_urls(
-        "https://github.com/andersensam/rules_ml_toolchain/archive/5859ea7c33f8c608e4d231e1f49417262867320a.tar.gz",
+        "https://github.com/andersensam/rules_ml_toolchain/archive/3e9dec4499b39afb83eef392d3a0f028bd988462.tar.gz",
     ),
 )
 
