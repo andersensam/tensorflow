@@ -1,3 +1,9 @@
+# DEPRECATED
+
+Please reference the [tensorflow-runtimes repo](https://github.com/andersensam/tensorflow-runtimes) for updated instructions on building TensorFlow.
+
+The content below is provided as a historical reference and should not be used.
+
 # Compiling and Installing TensorFlow 2.19
 
 This branch of TensorFlow includes modifications designed to enable the use of CUDA 12.8.1, this bringing TensorFlow support to the NVIDIA Blackwell platform.
